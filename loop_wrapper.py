@@ -85,9 +85,6 @@ def patch(model, cfg: LoopConfig):
     orig = {i: layers[i].forward for i in range(cfg.a, cfg.b + 1)}
     state = {}
 
-    def call_orig(i, x, kw, template):
-        return _hidden(orig[i](x, **kw))
-
     def guard(kw):
         assert kw.get("past_key_values") is None and not kw.get("use_cache", False), \
             "looping requires use_cache=False"
